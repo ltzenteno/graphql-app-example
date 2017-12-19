@@ -4,8 +4,7 @@ import {
   GraphQLInt,
   GraphQLSchema
 } from 'graphql';
-import {users} from './../util/users';
-import _ from 'lodash';
+import axios from 'axios';
 
 // declare types
 
@@ -28,7 +27,8 @@ const RootQuery = new GraphQLObjectType({
         id:{type:GraphQLInt}
       },
       resolve:(parentValue, args) => {
-        return _.find(users, {id:args.id})
+        return axios.get(`http://0.0.0.0:3000/users/${args.id}`)
+          .then(response =>  response.data);
       }
     }
   }
