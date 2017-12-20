@@ -2,18 +2,29 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLList
 } from 'graphql';
 import axios from 'axios';
 
 // declare types
 
+// to avoid circular references, we wrap the fields inside a closure (arrow function)
 const CompanyType = new GraphQLObjectType({
   name:'Company',
-  fields:{
-    id:{type:GraphQLInt},
-    name:{type:GraphQLString},
-    description:{type:GraphQLString}
+  fields:() => {
+    return {
+      id:{type:GraphQLInt},
+      name:{type:GraphQLString},
+      description:{type:GraphQLString},
+      users:{
+        type:GraphQLList(UserType),
+        resolve:(parentValue, args) => {
+          return axios.get(`http://0.0.0.0:3000/companies/${parentValue.id}/users`)
+            .then(response => response.data);
+        }
+      }
+    };
   }
 });
 
