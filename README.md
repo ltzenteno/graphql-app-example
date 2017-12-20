@@ -50,12 +50,22 @@ query findCompanies{
 ```
 
 ### Mutation
+- add
 ```
 mutation {
   addUser(firstName:"Luis", age:34, companyId: 2){
     id,
     firstName,
     age
+  }
+}
+```
+
+- delete
+```
+mutation {
+  deleteUser(id:41){
+    firstName
   }
 }
 ```
