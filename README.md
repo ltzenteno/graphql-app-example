@@ -69,3 +69,22 @@ mutation {
   }
 }
 ```
+
+- edit
+```
+mutation {
+  editUser(
+    id:48,
+    firstName:"Luis Alberto",
+    companyId:1
+  ){
+    id,
+    firstName,
+    age,
+    company{
+      name,
+      description
+    }
+  }
+}
+```
