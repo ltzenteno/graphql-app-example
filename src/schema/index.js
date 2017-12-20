@@ -8,12 +8,28 @@ import axios from 'axios';
 
 // declare types
 
+const CompanyType = new GraphQLObjectType({
+  name:'Company',
+  fields:{
+    id:{type:GraphQLInt},
+    name:{type:GraphQLString},
+    description:{type:GraphQLString}
+  }
+});
+
 const UserType = new GraphQLObjectType({
   name:'User',
   fields:{
     id:{type:GraphQLInt},
     firstName:{type:GraphQLString},
-    age:{type:GraphQLInt}
+    age:{type:GraphQLInt},
+    company:{
+      type:CompanyType,
+      resolve:(parentValue, args) => {
+        return axios.get(`http://0.0.0.0:3000/companies/${parentValue.companyId}`)
+          .then(response => response.data);
+      }
+    }
   }
 });
 
