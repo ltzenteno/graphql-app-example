@@ -22,7 +22,7 @@ query findCompanies{
 }
 
 ```
-
+### Fragments
 Query Fragment: a list of different properties we want to get access to.
 
 ```
@@ -45,6 +45,17 @@ query findCompanies{
     users{
       firstName
     }
+  }
+}
+```
+
+### Mutation
+```
+mutation {
+  addUser(firstName:"Luis", age:34, companyId: 2){
+    id,
+    firstName,
+    age
   }
 }
 ```
